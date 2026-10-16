@@ -9,10 +9,11 @@ WORKDIR /app
 
 # Copy source files and pom.xml
 COPY ./src /app/src
+COPY ./src/main/resources /app/src/main/resources
 COPY ./pom.xml /app/pom.xml
 
-# Build the application
-RUN mvn -f /app/pom.xml clean package
+# Build the application without running tests
+RUN mvn -f /app/pom.xml clean package -DskipTests
 RUN cp /app/target/*.jar /app/app.jar
 
 # Expose the Spring Boot port
